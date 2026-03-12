@@ -7,9 +7,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
+    "build:win": "tsc && vite build && electron-builder --win",
+    "build:mac": "tsc && vite build && electron-builder --mac",
     "preview": "vite preview",
     "electron:dev": "concurrently \"vite\" \"electron . --dev\"",
-    "electron:build": "npm run build"
+    "electron:build": "npm run build",
+    "mock:server": "node demo/mock-server.js",
+    "demo": "concurrently \"npm run mock:server\" \"npm run dev\""
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
