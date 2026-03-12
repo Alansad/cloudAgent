@@ -1,0 +1,66 @@
+[
+  {
+    "id": "export-order-report",
+    "action": "导出订单报表",
+    "description": "导出指定时间段的订单报表",
+    "endpoint": "https://api.example.com/reports/orders",
+    "method": "POST",
+    "authType": "token",
+    "paramsSchema": {
+      "startDate": "string (YYYY-MM-DD)",
+      "endDate": "string (YYYY-MM-DD)",
+      "format": "string (excel/csv) = excel"
+    },
+    "responseSchema": {
+      "fileUrl": "string",
+      "fileName": "string",
+      "size": "number"
+    },
+    "retryConfig": {
+      "maxRetries": 3,
+      "retryDelay": 2000
+    },
+    "timeout": 30000
+  },
+  {
+    "id": "query-user-info",
+    "action": "查询用户信息",
+    "description": "根据用户ID查询用户详细信息",
+    "endpoint": "https://api.example.com/users/{userId}",
+    "method": "GET",
+    "authType": "token",
+    "paramsSchema": {
+      "userId": "string"
+    },
+    "responseSchema": {
+      "id": "string",
+      "name": "string",
+      "email": "string",
+      "phone": "string"
+    },
+    "timeout": 10000
+  },
+  {
+    "id": "create-order",
+    "action": "创建订单",
+    "description": "创建新的订单记录",
+    "endpoint": "https://api.example.com/orders",
+    "method": "POST",
+    "authType": "token",
+    "paramsSchema": {
+      "productId": "string",
+      "quantity": "number",
+      "amount": "number",
+      "customerId": "string"
+    },
+    "responseSchema": {
+      "orderId": "string",
+      "status": "string"
+    },
+    "retryConfig": {
+      "maxRetries": 2,
+      "retryDelay": 1000
+    },
+    "timeout": 15000
+  }
+]

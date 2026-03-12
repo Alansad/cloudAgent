@@ -1,0 +1,18 @@
+[
+  {
+    "id": "finance-mcp",
+    "name": "财务MCP服务",
+    "endpoint": "https://mcp.example.com/finance",
+    "authType": "apiKey",
+    "capabilities": ["financial-analysis", "budget-calculation", "tax-calculation"],
+    "timeout": 20000
+  },
+  {
+    "id": "crm-mcp",
+    "name": "CRM MCP服务",
+    "endpoint": "https://mcp.example.com/crm",
+    "authType": "token",
+    "capabilities": ["customer-analysis", "sales-forecast", "lead-scoring"],
+    "timeout": 25000
+  }
+]
