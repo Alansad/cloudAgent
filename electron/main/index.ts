@@ -1,7 +1,12 @@
 import { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron'
+import { initialize as initializeRemote } from '@electron/remote/main'
 import path from 'path'
 import { encrypt, decrypt } from 'electron-safe-storage'
 import { IPC_CHANNELS } from '../../src/types/common'
+import { registerIpcHandlers } from './ipc'
+import { logger } from '../../src/utils/logger'
+
+initializeRemote()
 
 let mainWindow: BrowserWindow | null
 let tray: Tray | null
@@ -24,6 +29,9 @@ function createWindow() {
     icon: path.join(__dirname, '../../build/icon.png')
   })
 
+  // 初始化remote模块
+  initializeRemote().enable(mainWindow.webContents)
+
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000')
     mainWindow.webContents.openDevTools()
@@ -37,6 +45,12 @@ function createWindow() {
 
   createTray()
   createMenu()
+  registerIpcHandlers()
+  
+  // 初始化日志系统
+  logger.init().catch(err => {
+    console.error('日志系统初始化失败:', err)
+  })
 }
 
 function createTray() {

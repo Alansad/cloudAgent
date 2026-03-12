@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@electron/remote": "^2.1.2",
     "@langchain/aliyun": "^0.0.6",
     "@langchain/core": "^0.1.17",
     "@langchain/openai": "^0.0.12",
@@ -25,6 +26,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
+    "sqlite": "^5.1.1",
     "sqlite3": "^5.1.6",
     "zustand": "^4.4.7"
   },
