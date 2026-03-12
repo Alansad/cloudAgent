@@ -1,34 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect } from 'react'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/locale/zh_CN'
+import { AppProvider } from './context/AppContext'
+import { MainPage } from './pages/MainPage'
+import { SettingsPage } from './pages/SettingsPage'
+import { ipcRenderer } from './utils/ipc'
+import { IPC_CHANNELS } from './types/common'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // 监听主进程导航事件
+  useEffect(() => {
+    ipcRenderer.on(IPC_CHANNELS.NAVIGATE, (_, path: string) => {
+      window.location.hash = path
+    })
+
+    return () => {
+      ipcRenderer.off(IPC_CHANNELS.NAVIGATE)
+    }
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ConfigProvider locale={zhCN}>
+      <AppProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Routes>
+        </Router>
+      </AppProvider>
+    </ConfigProvider>
   )
 }
 
