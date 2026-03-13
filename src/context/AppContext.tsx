@@ -36,7 +36,7 @@ const initialState: AppState = {
   apiMappings: apiMapping as ApiMapping[],
   mcpConfigs: mcpConfig as McpConfig[],
   authToken: null,
-  webUrl: 'https://workspace.example.com',
+  webUrl: 'https://www.baidu.com',
   isLoading: false
 }
 
@@ -114,7 +114,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         dispatch({ type: 'ADD_MCP_CONFIG', payload: item })
       })
     }
-    if (savedWebUrl) {
+    const staleUrls = ['https://workspace.example.com', 'http://test.trusteeship.link.lianjia.com']
+    if (savedWebUrl && !staleUrls.includes(savedWebUrl)) {
       dispatch({ type: 'SET_WEB_URL', payload: savedWebUrl })
     }
     if (savedExecutionMode) {

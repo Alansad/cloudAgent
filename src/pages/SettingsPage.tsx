@@ -183,7 +183,7 @@ export const SettingsPage: React.FC = () => {
               name="webUrl"
               rules={[{ required: true, message: '请输入工作台地址' }]}
             >
-              <Input placeholder="https://workspace.example.com" />
+              <Input placeholder="http://test.trusteeship.link.lianjia.com" />
             </Form.Item>
 
             <Form.Item

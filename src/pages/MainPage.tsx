@@ -27,7 +27,7 @@ export const MainPage: React.FC = () => {
         </div>
       </Sider>
       
-      <Content style={{ padding: 16, background: '#fff' }}>
+      <Content style={{ padding: 16, background: '#fff', width: '100%', height: '100%', overflow: 'hidden' }}>
         <WebViewContainer />
       </Content>
     </Layout>
