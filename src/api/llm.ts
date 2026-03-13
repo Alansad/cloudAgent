@@ -1,10 +1,9 @@
-import { ChatOpenAI } from '@langchain/openai'
-import { ChatAlibabaTongyi } from '@langchain/aliyun'
+import axios from 'axios'
 import { BaseMessage, HumanMessage, SystemMessage } from '@langchain/core/messages'
 import { ExecutionMode, ApiMapping, WebStep } from '../types/common'
 
 interface LLMConfig {
-  provider: 'openai' | 'tongyi'
+  provider: 'openai' | 'codeplan'
   apiKey: string
   model: string
   baseUrl?: string
@@ -20,24 +19,38 @@ interface AgentResponse {
 }
 
 export class LLMService {
-  private model: ChatOpenAI | ChatAlibabaTongyi
+  private config: LLMConfig
 
   constructor(config: LLMConfig) {
-    if (config.provider === 'openai') {
-      this.model = new ChatOpenAI({
-        openAIApiKey: config.apiKey,
-        modelName: config.model,
-        temperature: 0,
-        configuration: {
-          baseURL: config.baseUrl
+    this.config = {
+      baseUrl: 'https://api.codeplan.ai/v1/chat/completions',
+      ...config
+    }
+  }
+
+  private async callCodeplanAPI(messages: Array<{ role: string; content: string }>): Promise<string> {
+    try {
+      const response = await axios.post(
+        this.config.baseUrl!,
+        {
+          model: this.config.model,
+          messages: messages,
+          temperature: 0,
+          stream: false
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.config.apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          timeout: 60000
         }
-      })
-    } else {
-      this.model = new ChatAlibabaTongyi({
-        alibabaApiKey: config.apiKey,
-        modelName: config.model,
-        temperature: 0
-      })
+      )
+
+      return response.data.choices[0].message.content.trim()
+    } catch (error) {
+      console.error('CodePlan API调用失败:', error)
+      throw new Error('大模型服务调用失败，请检查API密钥和网络连接')
     }
   }
 
@@ -67,14 +80,13 @@ ${JSON.stringify(apiMappings, null, 2)}
 输出仅返回JSON，无多余文字，不要包含markdown标记。
 `
 
-    const messages: BaseMessage[] = [
-      new SystemMessage(systemPrompt),
-      new HumanMessage(userInput)
+    const messages = [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userInput }
     ]
 
     try {
-      const response = await this.model.invoke(messages)
-      const content = response.content as string
+      const content = await this.callCodeplanAPI(messages)
       
       // 清理响应内容，确保是纯JSON
       const cleanedContent = content.replace(/```json|```/g, '').trim()
@@ -97,8 +109,10 @@ ${JSON.stringify(apiMappings, null, 2)}
 `
 
     try {
-      const response = await this.model.invoke([new HumanMessage(prompt)])
-      return response.content as string
+      const messages = [
+        { role: 'user', content: prompt }
+      ]
+      return await this.callCodeplanAPI(messages)
     } catch (error) {
       return '操作已完成，但生成自然语言回复失败，请查看详细结果。'
     }

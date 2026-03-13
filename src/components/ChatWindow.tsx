@@ -39,9 +39,9 @@ export const ChatWindow: React.FC = () => {
     try {
       // 初始化LLM服务（实际应该从配置中读取）
       const llmConfig = {
-        provider: 'tongyi' as const,
+        provider: 'codeplan' as const,
         apiKey: localStorage.getItem('llmApiKey') || '',
-        model: 'qwen-plus'
+        model: 'codeplan-3.5'
       }
 
       if (!llmConfig.apiKey) {

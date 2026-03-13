@@ -2,7 +2,6 @@
   "name": "agent-assistant",
   "version": "1.0.0",
   "description": "本地化Agent助手软件",
-  "type": "module",
   "main": "dist-electron/main/index.js",
   "scripts": {
     "dev": "vite",
@@ -22,13 +21,12 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@electron/remote": "^2.1.2",
-    "@langchain/aliyun": "^0.0.6",
     "@langchain/core": "^0.1.17",
     "@langchain/openai": "^0.0.12",
     "antd": "^5.12.0",
     "axios": "^1.6.2",
     "dayjs": "^1.11.10",
-    "electron-safe-storage": "^0.1.1",
+    "electron-safe-storage": "^1.0.6",
     "langchain": "^0.1.0",
     "playwright": "^1.40.0",
     "react": "^18.2.0",
@@ -37,7 +35,6 @@
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.6",
     "zustand": "^4.4.7"
-  },
   "devDependencies": {
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
@@ -49,7 +46,6 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-electron": "^0.15.5"
-  },
   "build": {
     "appId": "com.agent.assistant",
     "productName": "Agent助手",
@@ -64,11 +60,9 @@
       "target": "dmg",
       "icon": "build/icon.icns",
       "category": "public.app-category.productivity"
-    },
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico"
-    },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
