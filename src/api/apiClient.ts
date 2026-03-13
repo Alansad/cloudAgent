@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { ApiMapping } from '../types/common'
-import { encrypt, decrypt } from '../utils/encrypt'
+import { decrypt } from '../utils/encrypt'
 
 export class ApiClient {
   private async getAuthHeader(authType: string, authConfig?: any): Promise<Record<string, string>> {
@@ -25,7 +25,7 @@ export class ApiClient {
     }
   }
 
-  private async getOAuth2Token(tokenUrl: string): Promise<string> {
+  private async getOAuth2Token(_tokenUrl: string): Promise<string> {
     // 简化实现，实际需要处理OAuth2流程
     const token = localStorage.getItem('oauth2Token')
     if (token) {

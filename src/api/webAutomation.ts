@@ -1,6 +1,4 @@
 import { WebStep } from '../types/common'
-import { ipcRenderer } from '../utils/ipc'
-import { IPC_CHANNELS } from '../types/common'
 
 export class WebAutomationService {
   private webview: Electron.WebviewTag | null = null
@@ -119,7 +117,7 @@ export class WebAutomationService {
         resolve()
       }
 
-      this.webview.addEventListener('did-stop-loading', handleLoadStop)
+      this.webview!.addEventListener('did-stop-loading', handleLoadStop)
     })
   }
 

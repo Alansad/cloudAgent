@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
 import path from 'path'
-import { app } from '@electron/remote'
+import { app } from 'electron'
 
 export interface LogEntry {
   id?: number
@@ -160,19 +160,19 @@ class Logger {
   }
 
   // 快捷方法
-  info(type: string, content: string, data?: any) {
+  info(type: LogEntry['type'], content: string, data?: any) {
     return this.log({ type, level: 'info', content, data })
   }
 
-  warn(type: string, content: string, data?: any) {
+  warn(type: LogEntry['type'], content: string, data?: any) {
     return this.log({ type, level: 'warn', content, data })
   }
 
-  error(type: string, content: string, data?: any) {
+  error(type: LogEntry['type'], content: string, data?: any) {
     return this.log({ type, level: 'error', content, data })
   }
 
-  debug(type: string, content: string, data?: any) {
+  debug(type: LogEntry['type'], content: string, data?: any) {
     return this.log({ type, level: 'debug', content, data })
   }
 }

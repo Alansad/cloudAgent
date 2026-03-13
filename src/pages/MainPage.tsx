@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Row, Col } from 'antd'
+import { Layout } from 'antd'
 import { ChatWindow } from '../components/ChatWindow'
 import { WebViewContainer } from '../components/WebViewContainer'
 import { ModeSwitch } from '../components/ModeSwitch'

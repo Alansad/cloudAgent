@@ -105,15 +105,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const savedExecutionMode = localStorage.getItem('executionMode')
 
     if (savedApiMappings) {
-      dispatch({ 
-        type: 'SET_LOADING', 
-        payload: [...state.apiMappings, ...JSON.parse(savedApiMappings)] 
+      ;(JSON.parse(savedApiMappings) as ApiMapping[]).forEach(item => {
+        dispatch({ type: 'ADD_API_MAPPING', payload: item })
       })
     }
     if (savedMcpConfigs) {
-      dispatch({ 
-        type: 'SET_LOADING', 
-        payload: [...state.mcpConfigs, ...JSON.parse(savedMcpConfigs)] 
+      ;(JSON.parse(savedMcpConfigs) as McpConfig[]).forEach(item => {
+        dispatch({ type: 'ADD_MCP_CONFIG', payload: item })
       })
     }
     if (savedWebUrl) {

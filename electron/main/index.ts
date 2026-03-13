@@ -1,7 +1,6 @@
-import { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron'
-import { initialize as initializeRemote } from '@electron/remote/main'
+import { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, safeStorage } from 'electron'
+import { initialize as initializeRemote, enable as enableRemote } from '@electron/remote/main'
 import path from 'path'
-import { encrypt, decrypt } from 'electron-safe-storage'
 import { IPC_CHANNELS } from '../../src/types/common'
 import { registerIpcHandlers } from './ipc'
 import { logger } from '../../src/utils/logger'
@@ -10,7 +9,7 @@ initializeRemote()
 
 let mainWindow: BrowserWindow | null
 let tray: Tray | null
-let isDev = process.argv.includes('--dev')
+const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -30,10 +29,10 @@ function createWindow() {
   })
 
   // 初始化remote模块
-  initializeRemote().enable(mainWindow.webContents)
+  enableRemote(mainWindow.webContents)
 
-  if (isDev) {
-    mainWindow.loadURL('http://localhost:3000')
+  if (VITE_DEV_SERVER_URL) {
+    mainWindow.loadURL(VITE_DEV_SERVER_URL)
     mainWindow.webContents.openDevTools()
   } else {
     mainWindow.loadFile(path.join(__dirname, '../../dist/index.html'))
@@ -135,11 +134,11 @@ function createMenu() {
 
 // IPC 处理
 ipcMain.handle(IPC_CHANNELS.ENCRYPT, async (_, data: string) => {
-  return encrypt(data)
+  return safeStorage.encryptString(data).toString('base64')
 })
 
 ipcMain.handle(IPC_CHANNELS.DECRYPT, async (_, encryptedData: string) => {
-  return decrypt(encryptedData)
+  return safeStorage.decryptString(Buffer.from(encryptedData, 'base64'))
 })
 
 ipcMain.handle(IPC_CHANNELS.GET_SYSTEM_INFO, async () => {

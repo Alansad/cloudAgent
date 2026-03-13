@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { Card, Button, Space, Alert, Spin } from 'antd'
-import { ReloadOutlined, HomeOutlined, WarningOutlined } from '@ant-design/icons'
+import { ReloadOutlined, HomeOutlined } from '@ant-design/icons'
 import { useAppContext } from '../context/AppContext'
 import { webAutomationService } from '../api/webAutomation'
 
@@ -149,7 +149,7 @@ export const WebViewContainer: React.FC = () => {
           border: 'none',
           display: error ? 'none' : 'block'
         }}
-        allowpopups="false"
+        allowpopups={false}
         partition="persist:agent"
       />
     </Card>

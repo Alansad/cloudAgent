@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input, Select, InputNumber, Button, Space, Tag } from 'antd'
+import { Form, Input, Select, InputNumber, Button, Space } from 'antd'
 import { McpConfig } from '../types/common'
 
 const { Option } = Select

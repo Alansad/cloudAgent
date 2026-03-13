@@ -1,6 +1,6 @@
 import React from 'react'
 import { Segmented, Space, Typography } from 'antd'
-import { RocketOutlined, ApiOutlined, GlobalOutlined, RobotOutlined } from '@ant-design/icons'
+import { RocketOutlined, ApiOutlined, GlobalOutlined } from '@ant-design/icons'
 import { useAppContext } from '../context/AppContext'
 import { ExecutionMode } from '../types/common'
 

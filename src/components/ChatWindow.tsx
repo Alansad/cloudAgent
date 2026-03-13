@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { List, Input, Button, Card, Typography, Spin, Alert, Tag } from 'antd'
+import { List, Input, Button, Card, Typography, Alert, Tag } from 'antd'
 import { SendOutlined, ClearOutlined, LoadingOutlined } from '@ant-design/icons'
 import { useAppContext } from '../context/AppContext'
 import { LLMService } from '../api/llm'
@@ -186,7 +186,6 @@ export const ChatWindow: React.FC = () => {
                 (item.executionResult.data ? JSON.stringify(item.executionResult.data, null, 2) : undefined)
               }
               showIcon
-              size="small"
             />
           </div>
         )}

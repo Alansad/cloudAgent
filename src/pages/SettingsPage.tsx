@@ -103,7 +103,7 @@ export const SettingsPage: React.FC = () => {
       title: '操作',
       key: 'action',
       width: 120,
-      render: (_, record: ApiMapping) => (
+      render: (_: unknown, record: ApiMapping) => (
         <Space>
           <Button
             type="link"
@@ -141,7 +141,7 @@ export const SettingsPage: React.FC = () => {
       title: '操作',
       key: 'action',
       width: 120,
-      render: (_, record: McpConfig) => (
+      render: (_: unknown, record: McpConfig) => (
         <Space>
           <Button
             type="link"
